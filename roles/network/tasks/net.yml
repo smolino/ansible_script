@@ -1,0 +1,18 @@
+---
+- name: Check bonding
+  command: ip -o a l | grep bond
+  register: bond
+
+- name: Check net mask speed
+  command: bash /tmp/net_speed.sh
+  register: speed
+
+- name: Check net mask used
+  command: ip -o a l | grep -v 'inet6'
+  register: net
+
+- debug: var=bond.stdout_lines
+
+- debug: var=speed.stdout_lines
+
+- debug: var=net.stdout_lines

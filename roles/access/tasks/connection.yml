@@ -1,0 +1,12 @@
+---
+- name: Get PermitRootLogin configurations
+  command: grep -i permitrootlogin /etc/ssh/sshd_config
+  register: out1
+
+- name: Get Local Users
+  command: awk -F: '($3>=1000)' /etc/passwd | grep -v nobody
+  register: out2
+
+- debug: var=out1.stdout_lines
+
+- debug: var=out2.stdout.lines

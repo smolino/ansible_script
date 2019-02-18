@@ -1,0 +1,42 @@
+---
+- name: Get NTP Info
+  command: /bin/bash /tmp/ntp.sh
+  register: ntp
+
+- name: Get telnet status
+  command: ss -tulpn | grep telnet
+  register: telnet
+
+- name: Get Firewall Info and iptables rules
+  command: bash /tmp/firewall.sh
+  register: fw
+
+- name: Get NetworkManager status
+  command: systemctl status NetworkManager
+  register: nm
+
+- name: Get SELINUX Configurations and status
+  command: bash /tmp/selinux.sh
+  register: selinux
+
+- name: FS Mounted
+  command: bash /tmp/fs.sh
+  register: fs
+
+- name: Disks used
+  command: lsblk | egrep -iv 'sr0|loop'
+  register: disk
+
+- debug: var=ntp.stdout.lines
+
+- debug: var=telnet.stdout.lines
+
+- debug: var=fw.stdout.lines
+
+- debug: var=nm.stdout.lines
+
+- debug: var=selinux.stdout.lines
+
+- debug: var=fs.stdout.lines
+
+- debug: var=disk.stdout.lines

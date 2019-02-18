@@ -1,0 +1,33 @@
+---
+- hosts: all
+  remote_user: root
+  become: yes
+  become_method: sudo
+
+  tasks:
+          - name: copy os.sh script
+            copy: src=os.sh dest=/tmp/ mode=0755
+
+          - name: copy type.sh script
+            copy: src=type.sh dest=/tmp/ mode=0755
+
+          - name: copy firewall.sh script
+            copy: src=firewall.sh dest=/tmp/ mode=0755
+
+          - name: copy fs.sh script
+            copy: src=fs.sh dest=/tmp/ mode=0755
+
+          - name: copy net_speed.sh script
+            copy: src=net_speed.sh dest=/tmp/ mode=0755
+
+          - name: copy ntp.sh script
+            copy: src=ntp.sh dest=/tmp/ mode=0755
+
+          - name: copy selinux.sh script
+            copy: src=selinux.sh dest=/tmp/ mode=0755
+            
+  roles:
+        - machineInfo
+        - network
+        - config
+        - access
